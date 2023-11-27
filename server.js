@@ -26,6 +26,9 @@ import attendantsRouter from './routes/attendantsRoutes.js'
 
 app.use(morgan('tiny'))
 
+// static file
+app.use(express.static('./public'))
+
 // express.json
 app.use(express.json())
 
@@ -33,10 +36,6 @@ app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET))
 
 // routes
-app.get('/', (req,res) => {
-    console.log(req.signedCookies)
-    res.send('welcome')
-})
 
 // auth route
 app.use('/api/v1/auth', authRouter)
