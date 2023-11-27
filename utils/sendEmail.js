@@ -1,16 +1,19 @@
-import nodemailer from "nodemailer";
-import nodeMailerConfig from "./nodeMailerConfig.js";
+import sgMail from '@sendgrid/mail'
+
+
 
 const sendEmail = async ({ to, subject, text, html }) => {
-  const transporter = nodemailer.createTransport(nodeMailerConfig);
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-  return transporter.sendMail({
-    from: '"Kwabena Twitter 👻" <kwabena@mail.com>',
+  const msg = {
+    from : 'kobbyokai18@gmail.com',
     to,
     subject,
     text,
-    html,
-  });
+    html
+  }
+
+  const info = await sgMail.send(msg)
 };
 
 export default sendEmail;
