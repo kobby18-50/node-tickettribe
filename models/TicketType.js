@@ -51,9 +51,9 @@ const TicketTypeSchema = new mongoose.Schema({
 }, { timestamps : true})
 
 
-TicketTypeSchema.post('save', async function(){
-    console.log(this.modifiedPaths())
-})
+// TicketTypeSchema.post('save', async function(){
+//     console.log(this.modifiedPaths())
+// })
 
 
 export default mongoose.model('TicketType', TicketTypeSchema)

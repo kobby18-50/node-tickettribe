@@ -4,10 +4,20 @@ import dotenv from 'dotenv'
 // other packages
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
+import {v2 as cloudinary} from 'cloudinary'
 
 dotenv.config()
 import 'express-async-errors'
 import connectDB from './db/connect.js'
+
+
+// cloudinary config
+cloudinary.config({
+    cloud_name : process.env.CLOUD_NAME,
+    api_key : process.env.CLOUD_API_KEY,
+    api_secret : process.env.CLOUD_API_SECRET
+})
 
 
 
@@ -31,6 +41,9 @@ app.use(express.static('./public'))
 
 // express.json
 app.use(express.json())
+
+// express file upload
+app.use(fileUpload({useTempFiles : true}))
 
 // cookie parser
 app.use(cookieParser(process.env.JWT_SECRET))

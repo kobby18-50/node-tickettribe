@@ -2,8 +2,8 @@ import { StatusCodes } from "http-status-codes"
 import BadRequestError from "../errors/bad-request.js"
 import NotFoundError from "../errors/not-found.js"
 import Attendants from "../models/Attendants.js"
-import Event from "../models/Event.js"
 import TicketType from "../models/TicketType.js"
+import User from '../models/User.js'
 
 
 
@@ -53,12 +53,22 @@ const purchaseTicket = async (req,res) => {
 
     const purchaseTicket = await Attendants.create(req.body)
 
+
+    // sendEmail
+    // const user = await User.findOne({_id : req.user.userId})
+
     res.status(StatusCodes.CREATED).json({ticket : purchaseTicket})
 
 }
 
 const getAllPurchasedTickets = async (req,res) => {
     const purchaseTickets = await Attendants.find({attendantId : req.user.userId})
+
+    
+    
+
+   
+
 
     res.status(StatusCodes.OK).json({purchaseTickets, count: purchaseTickets.length})
 }

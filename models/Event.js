@@ -45,6 +45,11 @@ const EventSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         ref : 'User',
         required : [true , 'User is required']
+    },
+    
+    image : {
+        type : String,
+        default : "https://res.cloudinary.com/dx7ems5um/image/upload/v1701176372/ticket-tribe/tmp-2-1701176370253_b76ptl.jpg"
     }
 
 }, {timestamps : true})
