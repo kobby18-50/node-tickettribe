@@ -1,12 +1,17 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
 
 // other packages
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from "cloudinary";
+import cors from "cors";
+
+// security
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
+import xss from 'xss-clean'
 
 dotenv.config();
 import "express-async-errors";
@@ -32,16 +37,28 @@ import eventRouter from "./routes/eventRoutes.js";
 import ticketRouter from "./routes/ticketRoutes.js";
 import attendantsRouter from "./routes/attendantsRoutes.js";
 
-//Enable CORS
-app.use(cors());
 
 app.use(morgan("tiny"));
 
 // static file
 app.use(express.static("./public"));
 
+// security one
+app.set('trust proxy', 1)
+app.use(rateLimit({
+  windowMs : 15 * 60 * 1000,
+  max : 100
+}))
+
 // express.json
 app.use(express.json());
+
+
+// security two
+app.use(helmet())
+app.use(xss())
+app.use(cors());
+
 
 // express file upload
 app.use(fileUpload({ useTempFiles: true }));
