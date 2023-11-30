@@ -162,15 +162,17 @@ const login = async (req,res) => {
 
     const tokenUser = createTokenUser(user)
 
-    attachCookieToResponse({res, user : tokenUser})
-    res.status(StatusCodes.OK).json({user : tokenUser})
+    const token = await user.createJWT()
+    res.status(StatusCodes.OK).json({user : tokenUser, token})
 }
 
 const logout = async (req, res) => {
-    res.cookie('token', 'logout', {
-        httpOnly : true,
-        expiresIn : new Date(Date.now())
-    })
+    // res.cookie('token', 'logout', {
+    //     httpOnly : true,
+    //     expiresIn : new Date(Date.now())
+    // })
+
+    // console.log(req.headers.)
     res.status(StatusCodes.OK).json({msg : 'User logged out'})
 }
 

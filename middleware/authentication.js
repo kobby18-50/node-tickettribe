@@ -1,38 +1,41 @@
-import UnAuthenticatedError from "../errors/unauthenticated.js"
-import { isTokenValid } from "../utils/jwt.js"
-import UnAuthourizedError from '../errors/unauthorized.js'
+import UnAuthenticatedError from "../errors/unauthenticated.js";
+import UnAuthourizedError from "../errors/unauthorized.js";
+import jwt from "jsonwebtoken";
 
+const authenticatedUser = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-const authenticatedUser = (req,res, next) => {
-    const token = req.signedCookies.token
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    throw new UnAuthenticatedError(
+      "You are not authorized to access this endpoint"
+    );
+  }
 
-    if(!token){
-        throw new UnAuthenticatedError('User not authorized')
-    }
+  const token = authHeader.split(" ")[1];
 
-    try {
-        const {userId, name, role} = isTokenValid(token)
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-        req.user = {userId, name, role}
+    req.user = {
+      userId: payload.userId,
+      name: payload.fullName,
+      role: payload.role,
+    };
 
-        next()
-    } catch (error) {
-        throw new UnAuthenticatedError('User not authorized')
-    }
-}
+    next();
+  } catch (error) {
+    throw new UnAuthenticatedError("Authentication Invalid");
+  }
+};
 
 const authorizePermissions = (...role) => {
-    return ((req,res,next) => {
-        if(!req.user.role.includes(role) ){
-            throw new UnAuthourizedError('UnAuthorized to access this route')
-        }
+  return (req, res, next) => {
+    if (!req.user.role.includes(role)) {
+      throw new UnAuthourizedError("UnAuthorized to access this route");
+    }
 
-        next()
-    })
-}
+    next();
+  };
+};
 
-
-export { 
-    authenticatedUser,
-    authorizePermissions
-}
+export { authenticatedUser, authorizePermissions };

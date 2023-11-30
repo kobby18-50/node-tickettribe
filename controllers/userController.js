@@ -1,8 +1,6 @@
 import User from "../models/User.js"
 import { StatusCodes } from 'http-status-codes'
 import createTokenUser from "../utils/createTokenUser.js"
-import { attachCookieToResponse } from "../utils/jwt.js"
-import checkPermissions from "../utils/checkPermissions.js"
 import NotFoundError from '../errors/not-found.js'
 import BadRequestError from "../errors/bad-request.js"
 import UnAuthenticatedError from "../errors/unauthenticated.js"
@@ -36,9 +34,9 @@ const updateUser = async (req,res) => {
 
     const { userId } = req.user
 
-    const { full_name } = req.body
+    const { fullName } = req.body
 
-    if(!full_name){
+    if(!fullName){
         throw new BadRequestError('Some values were not provided')
     }
 
@@ -49,15 +47,15 @@ const updateUser = async (req,res) => {
     }
 
    
-    user.full_name = full_name
+    user.full_name = fullName
 
     await user.save()
 
     const tokenUser = createTokenUser(user)
 
-    attachCookieToResponse({res, user: tokenUser})
+    const token = await user.createJWT()
 
-    res.status(StatusCodes.ACCEPTED).json({msg : 'User updated', user : tokenUser})
+    res.status(StatusCodes.ACCEPTED).json({msg : 'User updated', user : tokenUser, token})
 }
 
 

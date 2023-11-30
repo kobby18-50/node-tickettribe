@@ -15,11 +15,22 @@ const purchaseTicket = async (req,res) => {
         throw new BadRequestError('Some values were not provided')
     }
 
-    
+   
     const ticket = await TicketType.findOne({eventName , type: ticketType, name : ticketName })
     
     if(!ticket){
         throw new NotFoundError('Ticket might not exist')
+    }
+
+    // checking qty
+    if(ticketQty > ticket.ticketQty ){
+        throw new BadRequestError('Ticket quantity is not enough for your desired quantity')
+    }
+
+    // untested 2
+    // ticket qty is 0
+    if(ticket.ticketQty === 0){
+        throw new BadRequestError('Ticket is sold out')
     }
 
     // if attendantTicket already exists
