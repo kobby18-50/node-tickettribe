@@ -22,7 +22,9 @@ const attachCookieToResponse = ({res, user}) => {
         httpOnly:true,
         expiresIn : new Date(Date.now() + oneDay),
 
-        secure : process.env.NODE_ENV === 'production',
+        // secure : process.env.NODE_ENV === 'production',
+        secure : true,
+        sameSite:"none",
         signed : true
     })
 }
