@@ -57,7 +57,7 @@ app.use(express.json());
 // security two
 app.use(helmet())
 app.use(xss())
-app.use(cors({credentials:true}));
+app.use(cors());
 
 
 // express file upload
