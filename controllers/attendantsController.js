@@ -3,7 +3,6 @@ import BadRequestError from "../errors/bad-request.js"
 import NotFoundError from "../errors/not-found.js"
 import Attendants from "../models/Attendants.js"
 import TicketType from "../models/TicketType.js"
-import User from '../models/User.js'
 
 
 

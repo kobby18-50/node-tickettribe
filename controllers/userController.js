@@ -87,10 +87,8 @@ const updateUserPassword = async (req,res) => {
    res.status(StatusCodes.ACCEPTED).json({msg : 'User updated'})
 }
 
-const showMe = async (req,res) => {
-    res.send(req.user)
-}
+
 
 export {
-    getAllUsers, getSingleUser, updateUser, updateUserPassword, showMe
+    getAllUsers, getSingleUser, updateUser, updateUserPassword
 }

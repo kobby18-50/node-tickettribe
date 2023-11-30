@@ -166,14 +166,6 @@ const login = async (req,res) => {
     res.status(StatusCodes.OK).json({user : tokenUser, token})
 }
 
-const logout = async (req, res) => {
-    // res.cookie('token', 'logout', {
-    //     httpOnly : true,
-    //     expiresIn : new Date(Date.now())
-    // })
 
-    // console.log(req.headers.)
-    res.status(StatusCodes.OK).json({msg : 'User logged out'})
-}
 
-export { register, login, logout, verifyEmail, forgotPassword, resetPassword}
+export { register, login, verifyEmail, forgotPassword, resetPassword}
