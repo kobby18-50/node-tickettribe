@@ -73,13 +73,6 @@ const purchaseTicket = async (req,res) => {
 
 const getAllPurchasedTickets = async (req,res) => {
     const purchaseTickets = await Attendants.find({attendantId : req.user.userId})
-
-    
-    
-
-   
-
-
     res.status(StatusCodes.OK).json({purchaseTickets, count: purchaseTickets.length})
 }
 
@@ -96,4 +89,12 @@ const getPurchasedTicket = async (req,res) => {
     res.status(StatusCodes.OK).json({purchaseTicket})
 }
 
-export { purchaseTicket, getAllPurchasedTickets, getPurchasedTicket }
+const getAllPurchasedTicketsForEvent = async (req,res) => {
+    const { id : eventId } = req.params
+
+    const purchaseTicketEvent = await Attendants.find({eventId})
+
+    res.status(StatusCodes.OK).json({purchaseTicketEvent, count : purchaseTicketEvent.length})
+}
+
+export { purchaseTicket, getAllPurchasedTickets, getPurchasedTicket, getAllPurchasedTicketsForEvent }
