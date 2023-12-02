@@ -124,7 +124,6 @@ const resetPassword = async (req,res) => {
             user.passwordToken = null
             user.passwordTokenExpirationDate = null
 
-            console.log(req.password)
 
 
             await user.save()

@@ -7,7 +7,6 @@ import UnAuthenticatedError from "../errors/unauthenticated.js"
 
 
 const getAllUsers = async (req,res) => {
-
     const users = await User.find({role : 'user'}).select('-password')
     res.status(StatusCodes.OK).json({users, count : users.length})
 }
@@ -87,8 +86,21 @@ const updateUserPassword = async (req,res) => {
    res.status(StatusCodes.ACCEPTED).json({msg : 'User updated'})
 }
 
+const userProfile = async (req,res) => {
+    const { userId } = req.user
+    const user = await User.findOne({_id : userId})
+
+
+    res.status(StatusCodes.OK).json({user : {
+        name : user.full_name,
+        email : user.email,
+        role : user.role
+    } })
+   
+}
+
 
 
 export {
-    getAllUsers, getSingleUser, updateUser, updateUserPassword
+    getAllUsers, getSingleUser, updateUser, updateUserPassword, userProfile
 }

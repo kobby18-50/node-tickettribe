@@ -1,4 +1,4 @@
-import { getSingleUser, getAllUsers, updateUser, updateUserPassword} from '../controllers/userController.js'
+import { getSingleUser, getAllUsers, updateUser, updateUserPassword, userProfile} from '../controllers/userController.js'
 import { authenticatedUser, authorizePermissions } from '../middleware/authentication.js'
 
 import express from 'express'
@@ -7,6 +7,8 @@ const router = express.Router()
 
 router.get('/', [authenticatedUser, authorizePermissions
 ('admin')], getAllUsers)
+
+router.get('/profile', authenticatedUser, userProfile)
 
 router.patch('/updateUserPassword', [authenticatedUser], updateUserPassword)
 
