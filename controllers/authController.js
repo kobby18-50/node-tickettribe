@@ -30,7 +30,7 @@ const register = async (req,res) => {
     // verification token
     const verificationToken = crypto.randomBytes(40).toString('hex')
 
-    const origin = 'http://localhost:5173'
+    const origin = 'http://localhost:3000'
 
 
     const user = await User.create({full_name, email, password, role, verificationToken})
@@ -88,7 +88,7 @@ const forgotPassword = async (req,res) => {
         const tenMinutes = 1000 * 60 * 10
         const passwordTokenExpirationDate = new Date(Date.now() + tenMinutes)
 
-        const origin = 'http://localhost:5173'
+        const origin = 'http://localhost:3000'
 
 
         // send password reset email
