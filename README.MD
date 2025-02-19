@@ -36,7 +36,7 @@ Ensure you have the following
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/kobby18-50/node-tickettribe
+   git clone https://github.com/kobby18-50/node-tickettribe.git
    cd node-tickettribe
    ```
 2. **Install dependencies:**
